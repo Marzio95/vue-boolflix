@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Header-bool />
-    <Main-bool />
+    <Header-bool @ricercaFilm="funzioneRicercaFilm" />
+    <Main-bool :array-films="arrayFilms" />
   </div>
 </template>
 
@@ -11,9 +11,19 @@ import MainBool from "./components/MainBool.vue";
 
 export default {
   name: "App",
+  data() {
+    return {
+      arrayFilms: null,
+    };
+  },
   components: {
     HeaderBool,
     MainBool,
+  },
+  methods: {
+    funzioneRicercaFilm(arrayFilms) {
+      this.arrayFilms = arrayFilms;
+    },
   },
 };
 </script>
