@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <Header-bool @ricercaFilm="funzioneRicercaFilm" />
-    <Main-bool :array-films="arrayFilms" />
+    <Header-bool
+      @ricercaFilm="funzioneRicercaFilm"
+      @ricercaSerie="funzioneRicercaSerie"
+    />
+    <Main-bool :array-films="arrayFilms" :array-series="arraySeries" />
   </div>
 </template>
 
@@ -14,6 +17,7 @@ export default {
   data() {
     return {
       arrayFilms: null,
+      arraySeries: null,
     };
   },
   components: {
@@ -23,6 +27,9 @@ export default {
   methods: {
     funzioneRicercaFilm(arrayFilms) {
       this.arrayFilms = arrayFilms;
+    },
+    funzioneRicercaSerie(arraySeries) {
+      this.arraySeries = arraySeries;
     },
   },
 };

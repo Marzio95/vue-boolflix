@@ -1,27 +1,31 @@
 <template>
   <div class="card p-4 col-2 text-center text-white bg-black">
-    <h2>{{ filmData.title }}</h2>
+    <h2>{{ serieData.name }}</h2>
     <h3
       v-show="
-        filmData.title.toLowerCase() != filmData.original_title.toLowerCase()
+        serieData.name.toLowerCase() != serieData.original_name.toLowerCase()
       "
     >
-      {{ filmData.original_title }}
+      {{ serieData.original_name }}
     </h3>
-    <lang-flag class="flag" :iso="filmData.original_language" squared="false" />
-    <h4>{{ filmData.vote_average }}</h4>
+    <lang-flag
+      class="flag"
+      :iso="serieData.original_language"
+      :squared="false"
+    />
+    <h4>{{ serieData.vote_average }}</h4>
   </div>
 </template>
 
 <script>
 import LangFlag from "vue-lang-code-flags";
 export default {
-  name: "CardBool",
+  name: "CardSerie",
   components: {
     LangFlag,
   },
   props: {
-    filmData: Object,
+    serieData: Object,
   },
 };
 </script>

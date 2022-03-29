@@ -9,6 +9,12 @@
           :key="element.id"
           :film-data="element"
         />
+        <h3 class="text-center m-4">Series</h3>
+        <Card-serie
+          v-for="element in arraySeries"
+          :key="element.id"
+          :serie-data="element"
+        />
       </div>
     </div>
   </main>
@@ -16,14 +22,16 @@
 
 <script>
 import CardBool from "./CardBool.vue";
+import CardSerie from "./CardSerie.vue";
 export default {
-  components: { CardBool },
+  components: { CardBool, CardSerie },
   name: "MainBool",
   data() {
     return {};
   },
   props: {
     arrayFilms: Array,
+    arraySeries: Array,
   },
 };
 </script>
@@ -48,7 +56,7 @@ main {
   font-weight: 700;
 }
 h3 {
-  font-size: 3rem;
+  font-size: 6rem;
   text-transform: uppercase;
 }
 </style>

@@ -23,24 +23,34 @@ export default {
     return {
       FilmCercato: "",
       arrayFilms: null,
+      arraySeries: null,
     };
   },
   methods: {
     ricercaFilm() {
-      if (this.FilmCercato == "") {
-        this.arrayFilms = "";
+      if (this.FilmCercato.trim() == "") {
+        this.arrayFilms = null;
+        this.$emit("ricercaFilm", this.arrayFilms);
       } else {
         axios
           .get(
-            `https://api.themoviedb.org/3/search/movie?api_key=e99307154c6dfb0b4750f6603256716d&query=${this.FilmCercato}`
+            `https://api.themoviedb.org/3/search/movie?api_key=9631e84004e35c8371fcb3c009af9551&query=${this.FilmCercato}`
           )
           .then((response) => {
-            console.log(response);
             this.arrayFilms = response.data.results;
-            console.log(this.arrayFilms);
             this.$emit("ricercaFilm", this.arrayFilms);
+          })
+          .then(() => {
+            axios
+              .get(
+                `https://api.themoviedb.org/3/search/tv?api_key=9631e84004e35c8371fcb3c009af9551&language=it_IT&query=${this.FilmCercato}`
+              )
+              .then((responseTV) => {
+                this.arraySeries = responseTV.data.results;
+                console.log(responseTV);
+                this.$emit("ricercaSerie", this.arraySeries);
+              });
           });
-        this.FilmCercato = "";
       }
     },
   },
