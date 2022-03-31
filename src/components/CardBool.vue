@@ -58,8 +58,6 @@ export default {
     fullArrayStars() {
       return this.stars;
     },
-  },
-  mounted: {
     ricercaAttori() {
       axios
         .get(
