@@ -1,7 +1,7 @@
 <template>
   <div class="card p-4 col-2 text-center text-white bg-black">
     <img
-      v-show="filmData.poster_path != null"
+      v-if="filmData.poster_path != null"
       :src="'http://image.tmdb.org/t/p/w342/' + filmData.poster_path"
       :alt="filmData.title"
     />
@@ -25,8 +25,8 @@
       </div>
       <div
         class="actor"
-        v-for="element in ricercaAttori /*()*/"
-        :key="element.name"
+        v-for="element in arrayAttori"
+        :key="'actors' + element.cast_id"
       >
         {{ element.name }}
       </div>
@@ -44,8 +44,8 @@ export default {
     return {
       starf: "star",
       arrayStars: [],
-      stars: Math.floor(this.filmData.vote_average / 2),
-      arrayAttori: null,
+      stars: Math.round(this.filmData.vote_average / 2),
+      arrayAttori: [],
     };
   },
   components: {
@@ -58,18 +58,19 @@ export default {
     fullArrayStars() {
       return this.stars;
     },
-    ricercaAttori() {
-      axios
-        .get(
-          `https://api.themoviedb.org/3/movie/${this.filmData.id}/credits?api_key=9631e84004e35c8371fcb3c009af9551`
-        )
-        .then((response) => {
-          this.arrayAttori = response.data.cast;
-        });
-      this.arrayAttori.length = 5;
-      console.log(this.arrayAttori);
-      return this.arrayAttori;
-    },
+  },
+  created() {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/${this.filmData.id}/credits?api_key=9631e84004e35c8371fcb3c009af9551`
+      )
+      .then((response) => {
+        this.arrayAttori = response.data.cast;
+      })
+      .then(() => {
+        this.arrayAttori.splice(5, this.arrayAttori.length);
+      });
+    return this.arrayAttori;
   },
 };
 </script>

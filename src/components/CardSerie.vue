@@ -1,7 +1,7 @@
 <template>
   <div class="card p-4 col-2 text-center text-white bg-black">
     <img
-      v-show="serieData.poster_path != null"
+      v-if="serieData.poster_path != null"
       :src="'http://image.tmdb.org/t/p/w342/' + serieData.poster_path"
       :alt="serieData.title"
     />
@@ -44,7 +44,7 @@ export default {
     return {
       starf: "star",
       arrayStars: [],
-      stars: Math.floor(this.serieData.vote_average / 2),
+      stars: Math.round(this.serieData.vote_average / 2),
       arrayAttori: null,
     };
   },
