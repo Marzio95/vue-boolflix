@@ -1,11 +1,11 @@
 <template>
-  <div class="card p-4 col-2 text-center text-white bg-black">
+  <div class="card p-2 col-2 text-center text-white bg-black">
     <img
       v-if="filmData.poster_path != null"
       :src="'http://image.tmdb.org/t/p/w342/' + filmData.poster_path"
       :alt="filmData.title"
     />
-    <h3>{{ filmData.title }}</h3>
+    <h4>{{ filmData.title }}</h4>
     <h5
       v-show="
         filmData.title.toLowerCase() != filmData.original_title.toLowerCase()
@@ -26,6 +26,12 @@
       <div class="actor" v-for="element in arrayAttori" :key="element.charater">
         {{ element.name }}
       </div>
+      <button @click="changeVisibilita" class="mt-4 d-block m-auto">
+        TRAMA
+      </button>
+      <small :class="visibilita == true ? 'd-block' : 'd-none'" class="trama"
+        ><button class="x">x</button>{{ filmData.overview }}</small
+      >
     </div>
   </div>
 </template>
@@ -42,6 +48,7 @@ export default {
       arrayStars: [],
       stars: Math.round(this.filmData.vote_average / 2),
       arrayAttori: [],
+      visibilita: false,
     };
   },
   components: {
@@ -53,6 +60,13 @@ export default {
   methods: {
     fullArrayStars() {
       return this.stars;
+    },
+    changeVisibilita() {
+      if (this.visibilita == false) {
+        this.visibilita = true;
+      } else {
+        this.visibilita = false;
+      }
     },
   },
   created() {
@@ -99,5 +113,21 @@ img:hover {
   font-size: 2rem;
   display: inline-block;
   color: gold;
+}
+.trama {
+  position: absolute;
+  z-index: 9000;
+  background: black;
+  border: 1px solid black;
+  width: 15rem;
+  bottom: -10rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem;
+}
+.x {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 </style>
