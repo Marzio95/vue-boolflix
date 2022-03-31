@@ -13,11 +13,22 @@
     >
       {{ filmData.original_title }}
     </h5>
-    <lang-flag class="flag" :iso="filmData.original_language" squared="false" />
+    <lang-flag
+      class="flag"
+      :iso="filmData.original_language"
+      :squared="false"
+    />
     <h4>{{ filmData.vote_average }}</h4>
     <div>
       <div class="star" v-for="element in fullArrayStars()" :key="element">
         &starf;
+      </div>
+      <div
+        class="actor"
+        v-for="element in ricercaAttori /*()*/"
+        :key="element.name"
+      >
+        {{ element.name }}
       </div>
     </div>
   </div>
@@ -25,6 +36,8 @@
 
 <script>
 import LangFlag from "vue-lang-code-flags";
+import axios from "axios";
+
 export default {
   name: "CardBool",
   data() {
@@ -32,6 +45,7 @@ export default {
       starf: "star",
       arrayStars: [],
       stars: Math.floor(this.filmData.vote_average / 2),
+      arrayAttori: null,
     };
   },
   components: {
@@ -42,8 +56,21 @@ export default {
   },
   methods: {
     fullArrayStars() {
-      console.log(this.stars);
       return this.stars;
+    },
+  },
+  mounted: {
+    ricercaAttori() {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/movie/${this.filmData.id}/credits?api_key=9631e84004e35c8371fcb3c009af9551`
+        )
+        .then((response) => {
+          this.arrayAttori = response.data.cast;
+        });
+      this.arrayAttori.length = 5;
+      console.log(this.arrayAttori);
+      return this.arrayAttori;
     },
   },
 };
@@ -55,7 +82,7 @@ export default {
   font-size: 2rem;
 }
 .card {
-  height: 23rem;
+  height: 25rem;
   position: relative;
   width: 290px;
 }

@@ -5,14 +5,14 @@
       :src="'http://image.tmdb.org/t/p/w342/' + serieData.poster_path"
       :alt="serieData.title"
     />
-    <h2>{{ serieData.name }}</h2>
-    <h3
+    <h3>{{ serieData.name }}</h3>
+    <h5
       v-show="
         serieData.name.toLowerCase() != serieData.original_name.toLowerCase()
       "
     >
       {{ serieData.original_name }}
-    </h3>
+    </h5>
     <lang-flag
       class="flag"
       :iso="serieData.original_language"
@@ -24,11 +24,20 @@
         &starf;
       </div>
     </div>
+    <div
+      class="actor"
+      v-for="element in ricercaAttori /*()*/"
+      :key="element.name"
+    >
+      {{ element.name }}
+    </div>
   </div>
 </template>
 
 <script>
 import LangFlag from "vue-lang-code-flags";
+import axios from "axios";
+
 export default {
   name: "CardSerie",
   data() {
@@ -36,6 +45,7 @@ export default {
       starf: "star",
       arrayStars: [],
       stars: Math.floor(this.serieData.vote_average / 2),
+      arrayAttori: null,
     };
   },
   components: {
@@ -46,8 +56,19 @@ export default {
   },
   methods: {
     fullArrayStars() {
-      console.log(this.stars);
       return this.stars;
+    },
+    ricercaAttori() {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/movie/${this.serieData.id}/credits?api_key=9631e84004e35c8371fcb3c009af9551`
+        )
+        .then((response) => {
+          this.arrayAttori = response.data.cast;
+        });
+      this.arrayAttori.length = 5;
+      console.log(this.arrayAttori);
+      return this.arrayAttori;
     },
   },
 };
@@ -59,7 +80,7 @@ export default {
   font-size: 2rem;
 }
 .card {
-  height: 23rem;
+  height: 25rem;
   position: relative;
   width: 290px;
 }

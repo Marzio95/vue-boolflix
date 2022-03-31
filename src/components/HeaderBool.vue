@@ -47,7 +47,6 @@ export default {
               )
               .then((responseTV) => {
                 this.arraySeries = responseTV.data.results;
-                console.log(responseTV);
                 this.$emit("ricercaSerie", this.arraySeries);
               });
           });
