@@ -24,11 +24,7 @@
         &starf;
       </div>
     </div>
-    <div
-      class="actor"
-      v-for="element in ricercaAttori /*()*/"
-      :key="element.name"
-    >
+    <div class="actor" v-for="element in arrayAttori" :key="element.cast_id">
       {{ element.name }}
     </div>
   </div>
@@ -45,7 +41,7 @@ export default {
       starf: "star",
       arrayStars: [],
       stars: Math.round(this.serieData.vote_average / 2),
-      arrayAttori: null,
+      arrayAttori: [],
     };
   },
   components: {
@@ -58,18 +54,19 @@ export default {
     fullArrayStars() {
       return this.stars;
     },
-    ricercaAttori() {
-      axios
-        .get(
-          `https://api.themoviedb.org/3/movie/${this.serieData.id}/credits?api_key=9631e84004e35c8371fcb3c009af9551`
-        )
-        .then((response) => {
-          this.arrayAttori = response.data.cast;
-        });
-      this.arrayAttori.length = 5;
-      console.log(this.arrayAttori);
-      return this.arrayAttori;
-    },
+  },
+  created() {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/tv/${this.serieData.id}/credits?api_key=9631e84004e35c8371fcb3c009af9551`
+      )
+      .then((response) => {
+        this.arrayAttori = response.data.cast;
+      })
+      .then(() => {
+        this.arrayAttori.splice(5, this.arrayAttori.length);
+      });
+    return this.arrayAttori;
   },
 };
 </script>

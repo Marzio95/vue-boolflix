@@ -23,11 +23,7 @@
       <div class="star" v-for="element in fullArrayStars()" :key="element">
         &starf;
       </div>
-      <div
-        class="actor"
-        v-for="element in arrayAttori"
-        :key="'actors' + element.cast_id"
-      >
+      <div class="actor" v-for="element in arrayAttori" :key="element.charater">
         {{ element.name }}
       </div>
     </div>
