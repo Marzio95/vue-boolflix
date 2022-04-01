@@ -5,27 +5,31 @@
       :src="'http://image.tmdb.org/t/p/w342/' + filmData.poster_path"
       :alt="filmData.title"
     />
-    <h4>{{ filmData.title }}</h4>
-    <h5
+    <h5>{{ filmData.title }}</h5>
+    <small
       v-show="
         filmData.title.toLowerCase() != filmData.original_title.toLowerCase()
       "
     >
       {{ filmData.original_title }}
-    </h5>
+    </small>
     <lang-flag
       class="flag"
       :iso="filmData.original_language"
       :squared="false"
     />
-    <h4>{{ filmData.vote_average }}</h4>
+    <h6>{{ filmData.vote_average }}</h6>
     <div>
       <div class="star" v-for="element in fullArrayStars()" :key="element">
         &starf;
       </div>
-      <div class="actor" v-for="element in arrayAttori" :key="element.charater">
+      <small
+        class="actor d-block"
+        v-for="element in arrayAttori"
+        :key="element.charater"
+      >
         {{ element.name }}
-      </div>
+      </small>
       <button
         @click="changeVisibilita"
         class="mt-4 d-block m-auto trama_button"
@@ -95,7 +99,7 @@ export default {
   font-size: 2rem;
 }
 .card {
-  height: 25rem;
+  height: 26rem;
   position: relative;
   width: 290px;
 }

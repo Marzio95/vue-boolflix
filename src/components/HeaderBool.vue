@@ -34,7 +34,7 @@ export default {
       } else {
         axios
           .get(
-            `https://api.themoviedb.org/3/search/movie?api_key=9631e84004e35c8371fcb3c009af9551&query=${this.FilmCercato}`
+            `https://api.themoviedb.org/3/search/movie?api_key=9631e84004e35c8371fcb3c009af9551&language=it_IT&query=${this.FilmCercato}`
           )
           .then((response) => {
             this.arrayFilms = response.data.results;
