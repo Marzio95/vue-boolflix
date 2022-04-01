@@ -26,11 +26,15 @@
       <div class="actor" v-for="element in arrayAttori" :key="element.charater">
         {{ element.name }}
       </div>
-      <button @click="changeVisibilita" class="mt-4 d-block m-auto">
+      <button
+        @click="changeVisibilita"
+        class="mt-4 d-block m-auto trama_button"
+      >
         TRAMA
       </button>
       <small :class="visibilita == true ? 'd-block' : 'd-none'" class="trama"
-        ><button class="x">x</button>{{ filmData.overview }}</small
+        ><button @click="changeVisibilita" class="x">x</button
+        >{{ filmData.overview }}</small
       >
     </div>
   </div>
@@ -106,8 +110,12 @@ img {
   z-index: 1312;
 }
 img:hover {
-  transition: 1s;
   opacity: 0;
+  z-index: -1312;
+}
+.card:hover img {
+  opacity: 0;
+  z-index: -1312;
 }
 .star {
   font-size: 2rem;
@@ -120,14 +128,23 @@ img:hover {
   background: black;
   border: 1px solid black;
   width: 15rem;
-  bottom: -10rem;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   padding: 1rem;
+  width: 100%;
+  overflow: auto;
 }
 .x {
   position: absolute;
   top: 0;
   right: 0;
+  background-color: red;
+  color: white;
+}
+.trama_button {
+  background-color: red;
+  color: white;
 }
 </style>
